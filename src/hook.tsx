@@ -30,9 +30,10 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     pauseOnHover = false,
     duplicates: rawDuplicates,
     disableTransition = false,
-    centerMode,
+    centerMode: rawCenterMode,
   } = props;
   const infinity = false;
+  const centerMode = showSlides === 1 ? true : rawCenterMode
 
   const duplicates = rawDuplicates || (infinity ? 2 : 1);
   const size = rows.length * duplicates;
