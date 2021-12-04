@@ -3,3 +3,5 @@ tsconfig.json
 example
 src
 node_modules
+package-lock.json
+.idea
