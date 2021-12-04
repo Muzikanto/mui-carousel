@@ -148,8 +148,16 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     };
   }, []);
 
-  const onMouseLeave = () => setHovered(false);
-  const onMouseEnter = () => setHovered(true);
+  const onMouseLeave = () => {
+    if (hovered) {
+      setHovered(false);
+    }
+  };
+  const onMouseEnter = () => {
+    if (!hovered) {
+      setHovered(true);
+    }
+  };
   const itemProps = (i: number) => {
     const index = i % (size / duplicates);
     const item = rows[index];
