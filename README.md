@@ -33,14 +33,14 @@ function Page() {
       renderDot={({ current }) => (
         <Button variant={current ? "contained" : "outlined"} />
       )}
-      dots={false}
+      dots={true}
       showSlides={3}
       speed={1000 * 1}
       spacing={5}
       autoPlay={false}
       // infinity={true} next feature
-      value={slide}
-      onChange={(v) => console.log("slide", v)}
+      // value={slide}
+      // onChange={(rawSlide, slide) => console.log("slide", slide)}
       pauseOnHover
       centerMode
       transitionDuration={1000}
