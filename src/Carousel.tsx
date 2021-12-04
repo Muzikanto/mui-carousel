@@ -26,7 +26,7 @@ const sxStyles: SxProps<Theme> = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    boxSizing: 'border-box',
+    boxSizing: "border-box",
 
     [`& .${carouselClasses.content}`]: {
       width: "100%",
@@ -73,9 +73,9 @@ function Carousel({
   sx = {},
   renderNext,
   renderPrev,
-  arrows = true,
+  arrows: arrowsRaw = true,
   renderDot,
-  dots = true,
+  dots: dotsRaw,
   showSlides = 3,
   onChange,
   ...props
@@ -85,6 +85,9 @@ function Carousel({
 
   const rows = React.Children.toArray(children);
   const size = rows.length * duplicates;
+  const dots = typeof dotsRaw === "undefined" ? size > showSlides : dotsRaw;
+  const arrows = size > showSlides;
+
   const carousel = useCarousel(rows, {
     ...props,
     showSlides,
@@ -126,15 +129,17 @@ function Carousel({
     let el: JSX.Element | null = null;
 
     if (renderDot && dots) {
+      const offset = props.centerMode ?  Math.floor(showSlides / 2) : 0;
+
       el = renderDot({
         current: i === carousel.rawSlide,
-        index: i,
+        index: i + offset,
       });
       el = React.cloneElement(el, {
         ...el.props,
         onClick: () => carousel.toSlide(i),
         className: clsx(carouselClasses.dot, el.props.className),
-        "data-slide": i,
+        "data-slide": i + offset,
       });
     }
 
@@ -158,9 +163,13 @@ function Carousel({
       </Box>
       {dots && renderDot && (
         <Box className={carouselClasses.dots}>
-          {new Array(rows.length - (showSlides - 1)).fill(0).map((_, i) => (
-            <React.Fragment key={`carousel-dot-${i}`}>{getDot(i)}</React.Fragment>
-          ))}
+          {new Array(rows.length - (!props.centerMode ? 0 : showSlides - 1))
+            .fill(0)
+            .map((_, i) => (
+              <React.Fragment key={`carousel-dot-${i}`}>
+                {getDot(i)}
+              </React.Fragment>
+            ))}
         </Box>
       )}
     </Box>

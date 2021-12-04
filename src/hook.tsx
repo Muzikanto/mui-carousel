@@ -1,8 +1,8 @@
-import React from 'react';
-import useMeasure from 'react-use-measure';
-import clsx from 'clsx';
-import Box from '@mui/material/Box';
-import { carouselClasses } from './Carousel';
+import React from "react";
+import useMeasure from "react-use-measure";
+import clsx from "clsx";
+import Box from "@mui/material/Box";
+import { carouselClasses } from "./Carousel";
 
 export type CarouselSettings = {
   spacing?: number;
@@ -12,8 +12,8 @@ export type CarouselSettings = {
   // infinity?: boolean;
   pauseOnHover?: boolean;
   duplicates?: number;
-  transitionDuration?: number;
   disableTransition?: boolean;
+  centerMode?: boolean;
 
   value?: number;
   onChange?: (slide: number, slideNormal: number) => void;
@@ -29,8 +29,8 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     onChange,
     pauseOnHover = false,
     duplicates: rawDuplicates,
-    transitionDuration = 3000,
     disableTransition = false,
+    centerMode,
   } = props;
   const infinity = false;
 
@@ -50,7 +50,12 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
   const loop = Math.ceil((slide + 1) / size) - 1;
   const visibleFrom = (size * 1000 + slide) % size;
   const visibleTo = (size * 1000 + slide + showSlides - 1) % size;
-  const centerIndex = (size * 1000 + Math.floor(showSlides / 2) + (slide % size)) % size;
+  const centerIndex =
+    (size * 1000 + Math.floor(showSlides / 2) + (slide % size)) % size;
+  const disableNext =
+    !infinity &&
+    (centerMode ? state === size - showSlides : state + 1 === size);
+  const disablePrev = !infinity && state - 1 < 0;
 
   const checkIsHidden = (i: number) => {
     if (disableTransition) {
@@ -87,11 +92,14 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       }
     }
 
-    return false
+    return false;
   };
 
   const spacingPx = spacing * 8;
-  const itemWidth = Math.round(containerBounds.width / showSlides - ((showSlides - 1) * spacingPx) / showSlides);
+  const itemWidth = Math.round(
+    containerBounds.width / showSlides -
+      ((showSlides - 1) * spacingPx) / showSlides
+  );
 
   React.useEffect(() => {
     if (autoPlay && (pauseOnHover ? !hovered : true)) {
@@ -99,22 +107,24 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
         let right = isRight;
 
         if (!infinity) {
-          if (isRight && slide + 1 === size) {
+          if (isRight && disableNext) {
             setIsRight(false);
             right = false;
           }
-          if (!isRight && slide - 1 < 0) {
+          if (!isRight && slide === 0) {
             setIsRight(true);
             right = true;
           }
         }
 
-        const nextSlide = slide + (right ? 1 : -1);
+        if (size > showSlides || centerMode) {
+          const nextSlide = slide + (right ? 1 : -1);
 
-        if (onChange) {
-          onChange(nextSlide, slideNormal);
-        } else {
-          setState(nextSlide);
+          if (onChange) {
+            onChange(nextSlide, slideNormal);
+          } else {
+            setState(nextSlide);
+          }
         }
       }, speed);
 
@@ -126,10 +136,10 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     return () => {};
   }, [slide, size, autoPlay, hovered, pauseOnHover, infinity]);
   React.useEffect(() => {
-    if (typeof value !== 'undefined') {
+    if (typeof value !== "undefined") {
       setState(value);
     }
-  }, [value, transitionDuration]);
+  }, [value, speed]);
   React.useEffect(() => {
     return () => {
       if (timeoutRef.current) {
@@ -160,6 +170,17 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       } else if (slideNormal < 0 && i < 2) {
         slideTr += size;
       }
+    } else {
+      if (!centerMode) {
+        if (slideNormal > 0) {
+          slideTr++;
+        }
+        const returnSlides = showSlides - (size - slideNormal) - 1;
+
+        if (returnSlides > 0) {
+          slideTr += returnSlides;
+        }
+      }
     }
 
     return {
@@ -171,11 +192,15 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       style: {
         width: itemWidth,
         marginRight: spacingPx,
-        transform: `translateX(calc(${100 * slideTr}% + (${spacingPx}px * ${slideTr})))`,
-        transition: !disableTransition ? `transform ${transitionDuration / 1000}s` : undefined,
+        transform: `translateX(calc(${
+          100 * slideTr
+        }% + (${spacingPx}px * ${slideTr})))`,
+        transition: !disableTransition
+          ? `transform ${speed / 1000}s`
+          : undefined,
       },
-      'data-item': i,
-      'data-hidden': isHidden ? 1 : 0,
+      "data-item": i,
+      "data-hidden": isHidden ? 1 : 0,
       children: item,
     };
   };
@@ -183,11 +208,11 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     ref: containerRef,
     onMouseLeave,
     onMouseEnter,
-    'data-current': slideNormal,
-    'data-center': centerIndex,
-    'data-from': visibleFrom,
-    'data-to': visibleTo,
-    'data-loop': loop,
+    "data-current": slideNormal,
+    "data-center": centerIndex,
+    "data-from": visibleFrom,
+    "data-to": visibleTo,
+    "data-loop": loop,
     className: carouselClasses.list,
   };
 
@@ -196,7 +221,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       const next = slide;
 
       if (!infinity) {
-        if (next < 0 || next > rows.length - showSlides) {
+        if (next < 0 || next > rows.length) {
           return;
         }
       }
@@ -204,7 +229,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       setState(next);
       setTrottleSwipe(true);
       stop();
-      timeoutRef.current = setTimeout(() => setTrottleSwipe(false), transitionDuration);
+      timeoutRef.current = setTimeout(() => setTrottleSwipe(false), speed);
     }
   };
   const nextSlide = () => {
@@ -216,7 +241,8 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
 
   return {
     rawSlide: state,
-    // slide: state,
+    slide: state,
+    centerIndex,
 
     nextSlide,
     prevSlide,
@@ -230,8 +256,8 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       return <Box key={`item-${i}`} {...itemPr} />;
     },
 
-    hiddenPrevArrow: !infinity && state - 1 < 0,
-    hiddenNextArrow: !infinity && state + 1 > rows.length - showSlides,
+    hiddenPrevArrow: disablePrev,
+    hiddenNextArrow: disableNext,
   };
 }
 

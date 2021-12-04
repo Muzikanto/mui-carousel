@@ -8,44 +8,128 @@ export default {
   title: "Examples",
 };
 
-export function Center() {
-  const [slide, setSlide] = React.useState(0);
+function getCommonProps() {
+  return {
+    renderPrev: (btnProps: any) => (
+      <Button variant="contained" {...btnProps}>
+        Prev
+      </Button>
+    ),
+    renderNext: (btnProps: any) => (
+      <Button variant="contained" {...btnProps}>
+        Next
+      </Button>
+    ),
+    renderDot: ({ current, index }: any) => (
+      <Button variant={current ? "contained" : "outlined"}>{index}</Button>
+    ),
+    dots: true,
+    showSlides: 3,
+    speed: 1000 * 1,
+    spacing: 2,
+    autoPlay: false,
+    // infinity={false}
+    pauseOnHover: true,
+    disableTransition: false,
+    sx: {},
+  };
+}
 
+export function CenterAutoplay() {
   return (
     <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
       <Carousel
-        renderPrev={(btnProps) => (
-          <Button variant="contained" {...btnProps}>
-            Prev
-          </Button>
-        )}
-        renderNext={(btnProps) => (
-          <Button variant="contained" {...btnProps}>
-            Next
-          </Button>
-        )}
-        renderDot={({ current, index }) => (
-          <Button variant={current ? "contained" : "outlined"}>
-            {index + 1}
-          </Button>
-        )}
-        dots={true}
-        showSlides={3}
-        speed={1000 * 0.5}
-        spacing={5}
-        autoPlay={false}
-        // infinity={false}
-        value={slide}
-        onChange={(v) => setSlide(v)}
-        pauseOnHover
-        transitionDuration={1000}
-        disableTransition={false}
+        {...getCommonProps()}
         sx={{
           mt: 3,
           "& .Carousel-item > *": {
             transition: "all 0.5s",
           },
           "& .Carousel-center > *": {
+            transform: "scale(1.2)",
+          },
+        }}
+        spacing={5}
+        autoPlay
+        centerMode
+      >
+        {new Array(5).fill(0).map((_, i) => (
+          <Paper
+            key={`item-${i}`}
+            sx={{ height: 200, background: "#fafafa", m: 3 }}
+          >
+            Item: {i}
+          </Paper>
+        ))}
+      </Carousel>
+    </Box>
+  );
+}
+
+export function Center() {
+  return (
+    <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
+      <Carousel
+        {...getCommonProps()}
+        sx={{
+          mt: 3,
+          "& .Carousel-item > *": {
+            transition: "all 0.5s",
+          },
+          "& .Carousel-center > *": {
+            transform: "scale(1.2)",
+          },
+        }}
+        spacing={5}
+        autoPlay={false}
+        centerMode
+      >
+        {new Array(5).fill(0).map((_, i) => (
+          <Paper
+            key={`item-${i}`}
+            sx={{ height: 200, background: "#fafafa", m: 3 }}
+          >
+            Item: {i}
+          </Paper>
+        ))}
+      </Carousel>
+    </Box>
+  );
+}
+
+export function Single() {
+  return (
+    <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
+      <Carousel {...getCommonProps()} showSlides={1}>
+        {new Array(5).fill(0).map((_, i) => (
+          <Paper
+            key={`item-${i}`}
+            sx={{ height: 200, background: "#fafafa", m: 1 }}
+          >
+            Item: {i}
+          </Paper>
+        ))}
+      </Carousel>
+    </Box>
+  );
+}
+
+export function NoCenter() {
+  return (
+    <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
+      <Carousel
+        {...getCommonProps()}
+        autoPlay={false}
+        dots={true}
+        spacing={5}
+        speed={1000}
+        // value={4}
+        arrows={false}
+        sx={{
+          "& .Carousel-item > *": {
+            transition: "transform 1s",
+          },
+          "& .Carousel-current > *": {
             transform: "scale(1.2)",
           },
         }}
@@ -63,43 +147,30 @@ export function Center() {
   );
 }
 
-export function Single() {
-  const [slide, setSlide] = React.useState(0);
-
+export function NoCenterAutoplay() {
   return (
     <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
       <Carousel
-        renderPrev={(btnProps) => (
-          <Button variant="contained" {...btnProps}>
-            Prev
-          </Button>
-        )}
-        renderNext={(btnProps) => (
-          <Button variant="contained" {...btnProps}>
-            Next
-          </Button>
-        )}
-        renderDot={({ current, index }) => (
-          <Button variant={current ? "contained" : "outlined"}>
-            {index + 1}
-          </Button>
-        )}
+        {...getCommonProps()}
+        autoPlay={true}
         dots={true}
-        showSlides={1}
-        speed={1000 * 0.5}
-        spacing={2}
-        autoPlay={false}
-        // infinity={true}
-        value={slide}
-        onChange={(slide, slideNormal) => setSlide(slideNormal)}
-        pauseOnHover
-        transitionDuration={1000}
-        disableTransition={false}
+        spacing={5}
+        speed={1000}
+        // value={4}
+        arrows={false}
+        sx={{
+          "& .Carousel-item > *": {
+            transition: "transform 1s",
+          },
+          "& .Carousel-current > *": {
+            transform: "scale(1.2)",
+          },
+        }}
       >
         {new Array(5).fill(0).map((_, i) => (
           <Paper
             key={`item-${i}`}
-            sx={{ height: 200, background: "#fafafa", m: 1 }}
+            sx={{ height: 200, background: "#fafafa", m: 3 }}
           >
             Item: {i}
           </Paper>
