@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   // reactStrictMode: true,
-  basePath: '/mui-carousel',
-
 
   webpack: (webpackConfig, options) => {
     webpackConfig.module.rules.push({
