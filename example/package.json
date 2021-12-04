@@ -1,0 +1,26 @@
+{
+   "name": "my-app",
+   "private": true,
+   "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "next lint"
+   },
+   "dependencies": {
+      "next": "12.0.2",
+      "@emotion/react": "^11.4.1",
+      "@emotion/styled": "^11.3.0",
+      "@mui/material": "^5.2.2",
+      "@mui/styles": "^5.2.1",
+      "react-dom": "^17.0.2",
+      "react-use-measure": "^2.1.1"
+   },
+   "devDependencies": {
+      "@types/node": "16.11.6",
+      "@types/react": "17.0.34",
+      "eslint": "7.32.0",
+      "eslint-config-next": "12.0.2",
+      "typescript": "4.4.4"
+   }
+}
