@@ -10,9 +10,10 @@
     }
   ],
   "scripts": {
+    "start": "start-storybook -p 5001",
+    "build:docs": "build-storybook -o docs",
     "clean": "rm -rf *.ts && rm -rf *.tsx && rm -rf *.js && rm -rf ./hooks && rm -rf ./nft && rm -rf ./core",
     "build": "tsc -b",
-    "lint": "tslint -c tslint.json 'example/**/*.ts' --fix",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
     "test": "jest",
@@ -25,7 +26,7 @@
       "...": "..."
     }
   },
-  "homepage": "https://github.com/Muzikanto/mui-carousel/wiki",
+  "homepage": "https://muzikanto.github.io/mui-carousel/",
   "keywords": [
     "carousel",
     "slide",
@@ -48,9 +49,16 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
+    "babel-preset-react-app": "^10.0.0",
     "react-use-measure": "^2.1.1"
   },
   "devDependencies": {
+    "babel-loader": "8.0.6",
+    "@storybook/addon-knobs": "^6.0.27",
+    "@storybook/addon-storysource": "5.2.3",
+    "@storybook/addons": "5.1.11",
+    "@storybook/react": "5.3.12",
+    "@storybook/source-loader": "^5.3.18",
     "@types/react": "^17.0.27",
     "@types/react-dom": "^17.0.9",
     "husky": "^7.0.2",
