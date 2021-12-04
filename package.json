@@ -1,6 +1,6 @@
 {
-  "name": "mui-material-carousel",
-  "version": "1.0.0",
+  "name": "mui-carousel",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "typings": "./index.d.ts",
@@ -25,7 +25,7 @@
       "...": "..."
     }
   },
-  "homepage": "https://github.com/Muzikanto/mui-material-carousel/wiki",
+  "homepage": "https://github.com/Muzikanto/mui-carousel/wiki",
   "keywords": [
     "carousel",
     "slide",
@@ -33,10 +33,10 @@
     "material-ui"
   ],
   "repository": {
-    "url": "https://github.com/Muzikanto/mui-material-carousel"
+    "url": "https://github.com/Muzikanto/mui-carousel"
   },
   "bugs": {
-    "url": "https://github.com/Muzikanto/mui-material-carousel/issues"
+    "url": "https://github.com/Muzikanto/mui-carousel/issues"
   },
   "author": "Muzikanto",
   "license": "ISC",
@@ -57,6 +57,10 @@
     "prettier": "^2.4.1",
     "pretty-quick": "^3.1.1",
     "react": "^17.0.2",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.3",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.2",
+    "react-dom": "^17.0.2"
   }
 }

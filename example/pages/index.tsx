@@ -8,7 +8,7 @@ function Test() {
   const [slide, setSlide] = React.useState(0);
 
   return (
-    <Box sx={{ p: 5, width: "100%", boxSizing: 'border-box' }}>
+    <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
       <Carousel
         renderPrev={(btnProps) => <Button {...btnProps}>Prev</Button>}
         renderNext={(btnProps) => <Button {...btnProps}>Next</Button>}
@@ -26,14 +26,6 @@ function Test() {
         pauseOnHover
         transitionDuration={1000}
         disableTransition={false}
-        sx={{
-          "& .Carousel-item > *": {
-            transition: "all 0.5s",
-          },
-          "& .Carousel-center > *": {
-            transform: "scale(0.8)",
-          },
-        }}
       >
         {new Array(5).fill(0).map((_, i) => (
           <Paper key={`item-${i}`} sx={{ height: 200, m: 1 }}>
@@ -45,12 +37,14 @@ function Test() {
         renderPrev={(btnProps) => <Button {...btnProps}>Prev</Button>}
         renderNext={(btnProps) => <Button {...btnProps}>Next</Button>}
         renderDot={({ current, index }) => (
-          <Button variant={current ? "contained" : "outlined"}>{index + 1}</Button>
+          <Button variant={current ? "contained" : "outlined"}>
+            {index + 1}
+          </Button>
         )}
         dots={true}
         showSlides={3}
         speed={(1000 * 1) / 2}
-        spacing={2}
+        spacing={5}
         autoPlay={false}
         // infinity={false}
         value={slide}
@@ -63,12 +57,15 @@ function Test() {
             transition: "all 0.5s",
           },
           "& .Carousel-center > *": {
-            transform: "scale(0.8)",
+            transform: "scale(1.2)",
           },
         }}
       >
         {new Array(5).fill(0).map((_, i) => (
-          <Paper key={`item-${i}`} sx={{ height: 200, background: '#fafafa', m: 1 }}>
+          <Paper
+            key={`item-${i}`}
+            sx={{ height: 200, background: "#fafafa", m: 3 }}
+          >
             Item: {i}
           </Paper>
         ))}

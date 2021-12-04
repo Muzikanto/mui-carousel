@@ -1,6 +1,6 @@
-import Carousel, { CarouselProps, carouselClasses } from "./Carousel";
-import { CarouselSettings } from "./hook";
+import Carousel from "./Carousel";
 
-export { CarouselProps, carouselClasses, CarouselSettings };
+export * from "./Carousel";
+export * from "./hook";
 
 export default Carousel;
