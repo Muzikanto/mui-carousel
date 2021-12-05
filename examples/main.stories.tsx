@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper } from "@mui/material";
-import Carousel from "../src";
+import Carousel, { carouselClasses } from "../src";
 
 export default {
   title: "Examples",
@@ -42,10 +42,10 @@ export function CenterAutoplay() {
         {...getCommonProps()}
         sx={{
           mt: 3,
-          "& .Carousel-item > *": {
+          [`& .${carouselClasses.item} > *`]: {
             transition: "all 0.5s",
           },
-          "& .Carousel-center > *": {
+          [`& .${carouselClasses.center} > *`]: {
             transform: "scale(1.2)",
           },
         }}
@@ -73,10 +73,10 @@ export function Center() {
         {...getCommonProps()}
         sx={{
           mt: 3,
-          "& .Carousel-item > *": {
+          [`& .${carouselClasses.item} > *`]: {
             transition: "all 0.5s",
           },
-          "& .Carousel-center > *": {
+         [`& .${carouselClasses.center} > *`]: {
             transform: "scale(1.2)",
           },
         }}
@@ -126,10 +126,13 @@ export function NoCenter() {
         // value={4}
         arrows={false}
         sx={{
-          "& .Carousel-item > *": {
+          [`& .${carouselClasses.list}`]: {
+            px: 3,
+          },
+          [`& .${carouselClasses.item} > *`]: {
             transition: "transform 1s",
           },
-          "& .Carousel-current > *": {
+          [`& .${carouselClasses.current} > *`]: {
             transform: "scale(1.2)",
           },
         }}
@@ -159,10 +162,13 @@ export function NoCenterAutoplay() {
         // value={4}
         arrows={false}
         sx={{
-          "& .Carousel-item > *": {
+          [`& .${carouselClasses.list}`]: {
+            px: 3,
+          },
+          [`& .${carouselClasses.item} > *`]: {
             transition: "transform 1s",
           },
-          "& .Carousel-current > *": {
+          [`& .${carouselClasses.current} > *`]: {
             transform: "scale(1.2)",
           },
         }}

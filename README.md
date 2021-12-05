@@ -14,6 +14,7 @@
 </div>
 
 ### Demo
+
 [https://muzikanto.github.io/mui-carousel/](https://muzikanto.github.io/mui-carousel/)
 
 ### Example
@@ -23,7 +24,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper } from "@mui/material";
-import Carousel from "mui-carousel";
+import Carousel, { carouselClasses } from "mui-carousel";
 
 function Page() {
   return (
@@ -46,10 +47,13 @@ function Page() {
       transitionDuration={1000}
       disableTransition={false}
       sx={{
-        "& .Carousel-item > *": {
+        [`& .${carouselClasses.list}`]: {
+          px: 3,
+        },
+        [`& .${carouselClasses.item} > *`]: {
           transition: "all 0.5s",
         },
-        "& .Carousel-item.Carousel-center > *": {
+        [`& .${carouselClasses.center} > *`]: {
           transform: "scale(1.2)",
         },
       }}
