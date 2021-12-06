@@ -118,7 +118,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
           }
         }
 
-        if (size > showSlides || centerMode) {
+        if (size > showSlides || !centerMode) {
           const nextSlide = slide + (right ? 1 : -1);
 
           if (onChange) {

@@ -155,7 +155,7 @@ export function NoCenterAutoplay() {
     <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
       <Carousel
         {...getCommonProps()}
-        autoPlay={true}
+        autoPlay
         dots={true}
         spacing={5}
         speed={1000}
