@@ -226,7 +226,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
   };
 
   const toSlide = (slide: number) => {
-    if (!trottleSwipe) {
+    if (!trottleSwipe && !disableTransition) {
       const next = slide;
 
       if (!infinity) {

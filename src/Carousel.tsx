@@ -63,7 +63,7 @@ export type CarouselProps = Omit<BoxProps, keyof CarouselSettings> &
     renderNext?: (props: { disabled: boolean }) => JSX.Element;
     renderPrev?: (props: { disabled: boolean }) => JSX.Element;
     arrows?: boolean;
-    renderDot?: (props: { index: number; current: boolean }) => JSX.Element;
+    renderDot?: (props: { index: number; selected: boolean }) => JSX.Element;
     dots?: boolean;
   };
 
@@ -132,7 +132,7 @@ function Carousel({
       const offset = props.centerMode ?  Math.floor(showSlides / 2) : 0;
 
       el = renderDot({
-        current: i === carousel.rawSlide,
+        selected: i === carousel.rawSlide,
         index: i + offset,
       });
       el = React.cloneElement(el, {
