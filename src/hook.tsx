@@ -33,7 +33,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     centerMode: rawCenterMode,
   } = props;
   const infinity = false;
-  const centerMode = showSlides === 1 ? true : rawCenterMode
+  const centerMode = showSlides === 1 ? true : rawCenterMode;
 
   const duplicates = rawDuplicates || (infinity ? 2 : 1);
   const size = rows.length * duplicates;
@@ -164,7 +164,8 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     const item = rows[index];
 
     let slideTr = -slide + size * loop;
-    let isHidden = infinity && checkIsHidden(i);
+    const isNotVisible = checkIsHidden(i);
+    let isHidden = infinity && isNotVisible;
 
     if (infinity) {
       const isLeft = i >= size + showSlides - Math.ceil(size / 2);
@@ -197,6 +198,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
         [carouselClasses.current]: i === slide,
         [carouselClasses.center]: centerIndex === i,
         [carouselClasses.hidden]: isHidden,
+        [carouselClasses.notVisible]: isNotVisible,
       }),
       style: {
         width: itemWidth,

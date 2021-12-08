@@ -4,6 +4,7 @@ import Box, { BoxProps } from "@mui/material/Box";
 import { Theme } from "@mui/material";
 import { SxProps } from "@mui/system";
 import useCarousel, { CarouselSettings } from "./hook";
+import { deepAssign } from "./utils";
 
 const PREFIX = "Carousel";
 export const carouselClasses = {
@@ -12,9 +13,10 @@ export const carouselClasses = {
   content: `${PREFIX}-content`,
   list: `${PREFIX}-list`,
   item: `${PREFIX}-item`,
+  hidden: `${PREFIX}-hidden`,
+  notVisible: `${PREFIX}-notVisible`,
   current: `${PREFIX}-current`,
   center: `${PREFIX}-center`,
-  hidden: `${PREFIX}-hidden`,
   arrow: `${PREFIX}-arrow`,
   arrowNext: `${PREFIX}-arrowNext`,
   arrowPrev: `${PREFIX}-arrowPrev`,
@@ -24,39 +26,37 @@ export const carouselClasses = {
 };
 
 const sxStyles: SxProps<Theme> = {
-  [`&.${carouselClasses.root}`]: {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  boxSizing: "border-box",
+
+  [`& .${carouselClasses.content}`]: {
+    width: "100%",
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
-    boxSizing: "border-box",
+  },
 
-    [`& .${carouselClasses.content}`]: {
-      width: "100%",
-      display: "flex",
-      alignItems: "center",
-    },
+  [`& .${carouselClasses.list}`]: {
+    width: "100%",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
 
-    [`& .${carouselClasses.list}`]: {
-      width: "100%",
-      whiteSpace: "nowrap",
-      overflow: "hidden",
+    [`& .${carouselClasses.item}`]: {
+      display: "inline-block",
 
-      [`& .${carouselClasses.item}`]: {
-        display: "inline-block",
-
-        "&:last-child": {
-          marginRight: 0,
-        },
-        [`&.${carouselClasses.hidden}`]: {
-          opacity: 0,
-          visibility: "hidden",
-        },
-        [`&.${carouselClasses.center}`]: {},
+      "&:last-child": {
+        marginRight: 0,
       },
+      [`&.${carouselClasses.hidden}`]: {
+        opacity: 0,
+        visibility: "hidden",
+      },
+      [`&.${carouselClasses.center}`]: {},
     },
-    [`& .${carouselClasses.dots}`]: {
-      marginTop: 3,
-    },
+  },
+  [`& .${carouselClasses.dots}`]: {
+    marginTop: 3,
   },
 };
 
@@ -133,7 +133,7 @@ function Carousel({
     let el: JSX.Element | null = null;
 
     if (renderDot && dots) {
-      const offset = props.centerMode ?  Math.floor(showSlides / 2) : 0;
+      const offset = props.centerMode ? Math.floor(showSlides / 2) : 0;
 
       el = renderDot({
         selected: i === carousel.rawSlide,
@@ -150,11 +150,22 @@ function Carousel({
     return el;
   };
 
+  const rootSx = React.useMemo(() => {
+    if (!sx) {
+      return sxStyles;
+    }
+    if (typeof sx === "object") {
+      return deepAssign(sxStyles as any, sx);
+    }
+
+    return (theme: any) => deepAssign(sxStyles as any, (sx as any)(theme));
+  }, [sx]);
+
   return (
     <Box
       {...props}
       className={clsx(carouselClasses.root, className)}
-      sx={{ ...sxStyles, ...sx } as any}
+      sx={rootSx}
     >
       <Box className={carouselClasses.content}>
         {prev}

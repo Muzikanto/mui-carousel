@@ -20,8 +20,8 @@ function getCommonProps() {
         Next
       </Button>
     ),
-    renderDot: ({ current, index }: any) => (
-      <Button variant={current ? "contained" : "outlined"}>{index}</Button>
+    renderDot: ({ selected, index }: any) => (
+      <Button variant={selected ? "contained" : "outlined"}>{index}</Button>
     ),
     dots: true,
     showSlides: 3,
@@ -76,7 +76,7 @@ export function Center() {
           [`& .${carouselClasses.item} > *`]: {
             transition: "all 0.5s",
           },
-         [`& .${carouselClasses.center} > *`]: {
+          [`& .${carouselClasses.center} > *`]: {
             transform: "scale(1.2)",
           },
         }}
@@ -185,3 +185,27 @@ export function NoCenterAutoplay() {
     </Box>
   );
 }
+
+// export function Fade() {
+//   return (
+//     <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
+//       <Carousel
+//         {...getCommonProps()}
+//         showSlides={1}
+//         sx={{
+//           [`& .${carouselClasses.notVisible}`]: { opacity: 0 },
+//           [`& .${carouselClasses.item}`]: { opacity: 1 },
+//         }}
+//       >
+//         {new Array(5).fill(0).map((_, i) => (
+//           <Paper
+//             key={`item-${i}`}
+//             sx={{ height: 200, background: "#fafafa", m: 1 }}
+//           >
+//             Item: {i}
+//           </Paper>
+//         ))}
+//       </Carousel>
+//     </Box>
+//   );
+// }
