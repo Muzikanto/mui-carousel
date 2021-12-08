@@ -9,7 +9,7 @@ export type CarouselSettings = {
   showSlides?: number;
   speed?: number;
   autoPlay?: boolean;
-  // infinity?: boolean;
+  infinity?: boolean;
   pauseOnHover?: boolean;
   duplicates?: number;
   disableTransition?: boolean;
@@ -31,15 +31,15 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     duplicates: rawDuplicates,
     disableTransition = false,
     centerMode: rawCenterMode,
+    infinity,
   } = props;
-  const infinity = false;
   const centerMode = showSlides === 1 ? true : rawCenterMode;
 
   const duplicates = rawDuplicates || (infinity ? 2 : 1);
   const size = rows.length * duplicates;
   const [containerRef, containerBounds] = useMeasure();
 
-  const [state, setState] = React.useState(0);
+  const [state, setState] = React.useState(5);
   const [hovered, setHovered] = React.useState(false);
   const [isRight, setIsRight] = React.useState(true);
   const [trottleSwipe, setTrottleSwipe] = React.useState(false);
@@ -183,12 +183,12 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     let isHidden = infinity && checkIsHidden(i);
 
     if (infinity) {
-      const isLeft = i >= size + showSlides - Math.ceil(size / 2);
-      // const isLeftOld = i >= size - Math.ceil(showSlides / 2);
+      // const isLeft = i >= size + showSlides - Math.ceil(size / 2);
+      const isLeftOld = i >= size - Math.ceil(showSlides / 2);
       // console.log(i, isLeft);
       //
-      // if (slideNormal < Math.ceil(showSlides / 2) && isLeftOld) {
-      if (slideNormal <= Math.floor(size / 2) && isLeft) {
+      if (slideNormal < Math.ceil(showSlides / 2) && isLeftOld) {
+      // if (slideNormal <= Math.floor(size / 2) && isLeft) {
         slideTr -= size;
       } else if (i + 2 < slideNormal) {
         slideTr += size;

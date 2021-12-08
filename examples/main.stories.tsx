@@ -186,6 +186,38 @@ export function NoCenterAutoplay() {
   );
 }
 
+export function Infinity() {
+  return (
+    <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
+      <Carousel
+        {...getCommonProps()}
+        sx={{
+          mt: 3,
+          [`& .${carouselClasses.item} > *`]: {
+            transition: "all 0.5s",
+          },
+          [`& .${carouselClasses.center} > *`]: {
+            transform: "scale(1.2)",
+          },
+        }}
+        spacing={5}
+        autoPlay
+        infinity
+        centerMode
+      >
+        {new Array(5).fill(0).map((_, i) => (
+          <Paper
+            key={`item-${i}`}
+            sx={{ height: 200, background: "#fafafa", m: 3 }}
+          >
+            Item: {i}
+          </Paper>
+        ))}
+      </Carousel>
+    </Box>
+  );
+}
+
 // export function Fade() {
 //   return (
 //     <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>

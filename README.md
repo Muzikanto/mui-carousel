@@ -39,7 +39,7 @@ function Page() {
       speed={1000 * 1}
       spacing={5}
       autoPlay={false}
-      // infinity={true} next feature
+      infinity // prev slide animation is broken (fixed in future)
       // value={slide}
       // onChange={(rawSlide, slide) => console.log("slide", slide)}
       pauseOnHover
