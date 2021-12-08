@@ -16,7 +16,9 @@ export const carouselClasses = {
   center: `${PREFIX}-center`,
   hidden: `${PREFIX}-hidden`,
   arrow: `${PREFIX}-arrow`,
-  arrowHidden: `${PREFIX}-arrowHidden`,
+  arrowNext: `${PREFIX}-arrowNext`,
+  arrowPrev: `${PREFIX}-arrowPrev`,
+  arrowDisabled: `${PREFIX}-arrowDisabled`,
   dots: `${PREFIX}-dots`,
   dot: `${PREFIX}-dot`,
 };
@@ -106,7 +108,8 @@ function Carousel({
       onClick: carousel.nextSlide,
       className: clsx(
         carouselClasses.arrow,
-        carouselClasses.arrowHidden,
+        carouselClasses.arrowDisabled,
+        carouselClasses.arrowNext,
         next.props.className
       ),
     });
@@ -120,7 +123,8 @@ function Carousel({
       onClick: carousel.prevSlide,
       className: clsx(
         carouselClasses.arrow,
-        carouselClasses.arrowHidden,
+        carouselClasses.arrowDisabled,
+        carouselClasses.arrowPrev,
         prev.props.className
       ),
     });
