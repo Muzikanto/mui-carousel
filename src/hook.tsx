@@ -58,6 +58,21 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     (centerMode ? state === size - showSlides : state + 1 === size);
   const disablePrev = !infinity && state - 1 < 0;
 
+  const checkIsNotVisible = (i: number) => {
+    if (!centerMode) {
+      if (showSlides === 1) {
+        return i !== visibleFrom;
+      }
+      if (visibleTo > visibleFrom) {
+        return i < visibleFrom || i >= visibleTo;
+      }
+      if (visibleTo < visibleFrom) {
+        return i < visibleFrom && i > visibleTo;
+      }
+    }
+
+    return false;
+  };
   const checkIsHidden = (i: number) => {
     if (disableTransition) {
       if (showSlides === 1) {
@@ -164,8 +179,8 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     const item = rows[index];
 
     let slideTr = -slide + size * loop;
-    const isNotVisible = checkIsHidden(i);
-    let isHidden = infinity && isNotVisible;
+    const isNotVisible = checkIsNotVisible(i);
+    let isHidden = infinity && checkIsHidden(i);
 
     if (infinity) {
       const isLeft = i >= size + showSlides - Math.ceil(size / 2);
@@ -192,6 +207,14 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
         }
       }
     }
+    const style = {
+      width: itemWidth,
+      marginRight: spacingPx,
+      transform: `translateX(calc(${
+        100 * slideTr
+      }% + (${spacingPx}px * ${slideTr})))`,
+      transition: !disableTransition ? `all ${speed / 1000}s` : undefined,
+    };
 
     return {
       className: clsx(carouselClasses.item, {
@@ -200,16 +223,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
         [carouselClasses.hidden]: isHidden,
         [carouselClasses.notVisible]: isNotVisible,
       }),
-      style: {
-        width: itemWidth,
-        marginRight: spacingPx,
-        transform: `translateX(calc(${
-          100 * slideTr
-        }% + (${spacingPx}px * ${slideTr})))`,
-        transition: !disableTransition
-          ? `transform ${speed / 1000}s`
-          : undefined,
-      },
+      style,
       "data-item": i,
       "data-hidden": isHidden ? 1 : 0,
       children: item,

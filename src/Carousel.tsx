@@ -4,7 +4,26 @@ import Box, { BoxProps } from "@mui/material/Box";
 import { Theme } from "@mui/material";
 import { SxProps } from "@mui/system";
 import useCarousel, { CarouselSettings } from "./hook";
-import { deepAssign } from "./utils";
+
+const objectsAssign = (
+  one: { [key: string]: any },
+  two: { [key: string]: any }
+) => {
+  const res: { [key: string]: any } = {};
+
+  for (const k in one) {
+    res[k] = one[k];
+  }
+  for (const k in two) {
+    if (typeof two[k] === "object") {
+      res[k] = objectsAssign(res[k] || {}, two[k]);
+    } else {
+      res[k] = two[k];
+    }
+  }
+
+  return res;
+};
 
 const PREFIX = "Carousel";
 export const carouselClasses = {
@@ -155,12 +174,12 @@ function Carousel({
       return sxStyles;
     }
     if (typeof sx === "object") {
-      return deepAssign(sxStyles as any, sx);
+      return objectsAssign(sxStyles as any, sx);
     }
 
-    return (theme: any) => deepAssign(sxStyles as any, (sx as any)(theme));
+    return (theme: any) => objectsAssign(sxStyles as any, (sx as any)(theme));
   }, [sx]);
-
+  // console.log(rootSx)
   return (
     <Box
       {...props}
