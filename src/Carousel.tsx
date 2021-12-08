@@ -102,7 +102,7 @@ function Carousel({
   ...props
 }: CarouselProps) {
   //props.infinity
-  const duplicates = props.duplicates || (props.infinity ? 2 : 1);
+  const duplicates = props.duplicates || (props.infinity ? 3 : 1);
 
   const rows = React.Children.toArray(children);
   const size = rows.length * duplicates;

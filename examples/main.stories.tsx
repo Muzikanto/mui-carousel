@@ -205,7 +205,7 @@ export function Infinity() {
         infinity
         centerMode
       >
-        {new Array(5).fill(0).map((_, i) => (
+        {new Array(3).fill(0).map((_, i) => (
           <Paper
             key={`item-${i}`}
             sx={{ height: 200, background: "#fafafa", m: 3 }}
