@@ -112,10 +112,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
   };
 
   const spacingPx = spacing * 8;
-  const itemWidth = Math.round(
-    containerBounds.width / showSlides -
-      ((showSlides - 1) * spacingPx) / showSlides
-  );
+  const itemWidth = Math.round(containerBounds.width / showSlides);
 
   React.useEffect(() => {
     if (autoPlay && (pauseOnHover ? !hovered : true)) {
@@ -188,7 +185,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       // console.log(i, isLeft);
       //
       if (slideNormal < Math.ceil(showSlides / 2) && isLeftOld) {
-      // if (slideNormal <= Math.floor(size / 2) && isLeft) {
+        // if (slideNormal <= Math.floor(size / 2) && isLeft) {
         slideTr -= size;
       } else if (i + 2 < slideNormal) {
         slideTr += size;
@@ -217,27 +214,34 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       }),
       style: {
         width: itemWidth,
-        marginRight: spacingPx,
-        transform: `translateX(calc(${
-            100 * slideTr
-        }% + (${spacingPx}px * ${slideTr})))`,
-        transition: !disableTransition ? `transform ${speed / 1000}s` : undefined,
+        // marginRight: spacingPx,
+        transform: `translateX(${100 * slideTr}%)`,
+        transition: !disableTransition
+          ? `transform ${speed / 1000}s`
+          : undefined,
+        padding: spacingPx,
       },
       "data-item": i,
       "data-hidden": isHidden ? 1 : 0,
       children: item,
     };
   };
-  const containerProps = {
-    ref: containerRef,
+  const rootProps = {
     onMouseLeave,
     onMouseEnter,
+  };
+  const listProps = {
+    ref: containerRef,
+
     "data-current": slideNormal,
     "data-center": centerIndex,
     "data-from": visibleFrom,
     "data-to": visibleTo,
     "data-loop": loop,
     className: carouselClasses.list,
+    sx: {
+      margin: `-${spacingPx}px 0px`,
+    },
   };
 
   const toSlide = (slide: number) => {
@@ -272,7 +276,8 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     prevSlide,
     toSlide,
 
-    containerProps,
+    rootProps,
+    listProps,
     itemProps,
     renderItem: (i: number) => {
       const itemPr = itemProps(i);

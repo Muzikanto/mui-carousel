@@ -42,6 +42,9 @@ export function CenterAutoplay() {
         {...getCommonProps()}
         sx={{
           mt: 3,
+          [`& .${carouselClasses.dots}`]: {
+            mt: 5,
+          },
           [`& .${carouselClasses.item} > *`]: {
             transition: "all 0.5s",
           },
@@ -49,15 +52,12 @@ export function CenterAutoplay() {
             transform: "scale(1.2)",
           },
         }}
-        spacing={5}
+        spacing={4}
         autoPlay
         centerMode
       >
         {new Array(5).fill(0).map((_, i) => (
-          <Paper
-            key={`item-${i}`}
-            sx={{ height: 200, background: "#fafafa", m: 3 }}
-          >
+          <Paper key={`item-${i}`} sx={{ height: 200, background: "#fafafa" }}>
             Item: {i}
           </Paper>
         ))}
@@ -73,6 +73,9 @@ export function Center() {
         {...getCommonProps()}
         sx={{
           mt: 3,
+          [`& .${carouselClasses.dots}`]: {
+            mt: 5,
+          },
           [`& .${carouselClasses.item} > *`]: {
             transition: "all 0.5s",
           },
@@ -80,15 +83,12 @@ export function Center() {
             transform: "scale(1.2)",
           },
         }}
-        spacing={5}
+        spacing={4}
         autoPlay={false}
         centerMode
       >
         {new Array(5).fill(0).map((_, i) => (
-          <Paper
-            key={`item-${i}`}
-            sx={{ height: 200, background: "#fafafa", m: 3 }}
-          >
+          <Paper key={`item-${i}`} sx={{ height: 200, background: "#fafafa" }}>
             Item: {i}
           </Paper>
         ))}
@@ -102,10 +102,7 @@ export function Single() {
     <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
       <Carousel {...getCommonProps()} showSlides={1}>
         {new Array(5).fill(0).map((_, i) => (
-          <Paper
-            key={`item-${i}`}
-            sx={{ height: 200, background: "#fafafa", m: 1 }}
-          >
+          <Paper key={`item-${i}`} sx={{ height: 200, background: "#fafafa" }}>
             Item: {i}
           </Paper>
         ))}
@@ -126,8 +123,11 @@ export function NoCenter() {
         // value={4}
         arrows={false}
         sx={{
+          [`& .${carouselClasses.dots}`]: {
+            mt: 5,
+          },
           [`& .${carouselClasses.list}`]: {
-            px: 3,
+            mx: 3,
           },
           [`& .${carouselClasses.item} > *`]: {
             transition: "transform 1s",
@@ -138,10 +138,7 @@ export function NoCenter() {
         }}
       >
         {new Array(5).fill(0).map((_, i) => (
-          <Paper
-            key={`item-${i}`}
-            sx={{ height: 200, background: "#fafafa", m: 3 }}
-          >
+          <Paper key={`item-${i}`} sx={{ height: 200, background: "#fafafa" }}>
             Item: {i}
           </Paper>
         ))}
@@ -162,8 +159,11 @@ export function NoCenterAutoplay() {
         // value={4}
         arrows={false}
         sx={{
+          [`& .${carouselClasses.dots}`]: {
+            mt: 5,
+          },
           [`& .${carouselClasses.list}`]: {
-            px: 3,
+            mx: 3,
           },
           [`& .${carouselClasses.item} > *`]: {
             transition: "transform 1s",
@@ -174,10 +174,7 @@ export function NoCenterAutoplay() {
         }}
       >
         {new Array(5).fill(0).map((_, i) => (
-          <Paper
-            key={`item-${i}`}
-            sx={{ height: 200, background: "#fafafa", m: 3 }}
-          >
+          <Paper key={`item-${i}`} sx={{ height: 200, background: "#fafafa" }}>
             Item: {i}
           </Paper>
         ))}
@@ -193,6 +190,9 @@ export function Infinity() {
         {...getCommonProps()}
         sx={{
           mt: 3,
+          [`& .${carouselClasses.dots}`]: {
+            mt: 5,
+          },
           [`& .${carouselClasses.item} > *`]: {
             transition: "all 0.5s",
           },
@@ -200,7 +200,8 @@ export function Infinity() {
             transform: "scale(1.2)",
           },
         }}
-        spacing={5}
+        dots={false}
+        spacing={4}
         autoPlay
         infinity
         centerMode

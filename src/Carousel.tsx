@@ -63,6 +63,7 @@ const sxStyles: SxProps<Theme> = {
 
     [`& .${carouselClasses.item}`]: {
       display: "inline-block",
+      boxSizing: "border-box",
 
       "&:last-child": {
         marginRight: 0,
@@ -127,7 +128,7 @@ function Carousel({
       onClick: carousel.nextSlide,
       className: clsx(
         carouselClasses.arrow,
-        carouselClasses.arrowDisabled,
+        { [carouselClasses.arrowDisabled]: carousel.hiddenNextArrow },
         carouselClasses.arrowNext,
         next.props.className
       ),
@@ -142,7 +143,7 @@ function Carousel({
       onClick: carousel.prevSlide,
       className: clsx(
         carouselClasses.arrow,
-        carouselClasses.arrowDisabled,
+        { [carouselClasses.arrowDisabled]: carousel.hiddenPrevArrow },
         carouselClasses.arrowPrev,
         prev.props.className
       ),
@@ -185,13 +186,14 @@ function Carousel({
 
   return (
     <Box
+      {...carousel.rootProps}
       {...props}
       className={clsx(carouselClasses.root, className)}
       sx={rootSx}
     >
       <Box className={carouselClasses.content}>
         {prev}
-        <Box {...carousel.containerProps}>
+        <Box {...carousel.listProps}>
           {new Array(size).fill(0).map((_, i) => {
             return carousel.renderItem(i);
           })}
