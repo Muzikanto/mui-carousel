@@ -221,7 +221,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
         transform: `translateX(calc(${
             100 * slideTr
         }% + (${spacingPx}px * ${slideTr})))`,
-        transition: !disableTransition ? `all ${speed / 1000}s` : undefined,
+        transition: !disableTransition ? `transform ${speed / 1000}s` : undefined,
       },
       "data-item": i,
       "data-hidden": isHidden ? 1 : 0,
