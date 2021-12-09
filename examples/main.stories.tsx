@@ -28,7 +28,7 @@ function getCommonProps() {
     speed: 1000 * 1,
     spacing: 2,
     autoPlay: false,
-    // infinity={false}
+    infinity: false,
     pauseOnHover: true,
     disableTransition: false,
     sx: {},

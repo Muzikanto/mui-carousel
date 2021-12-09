@@ -152,10 +152,13 @@ function Carousel({
     let el: JSX.Element | null = null;
 
     if (renderDot && dots) {
-      const offset = props.centerMode ? Math.floor(showSlides / 2) : 0;
+      const offset =
+        props.centerMode && !props.infinity ? Math.floor(showSlides / 2) : 0;
 
       el = renderDot({
-        selected: (i % rows.length) === carousel.centerIndex % rows.length,
+        selected: props.centerMode
+          ? (i + offset) % rows.length === carousel.centerIndex % rows.length
+          : i === carousel.slide,
         index: i + offset,
       });
       el = React.cloneElement(el, {
@@ -197,7 +200,10 @@ function Carousel({
       </Box>
       {dots && renderDot && (
         <Box className={carouselClasses.dots}>
-          {new Array(rows.length - (!props.centerMode || props.infinity ? 0 : showSlides - 1))
+          {new Array(
+            rows.length -
+              (!props.centerMode || props.infinity ? 0 : showSlides - 1)
+          )
             .fill(0)
             .map((_, i) => (
               <React.Fragment key={`carousel-dot-${i}`}>

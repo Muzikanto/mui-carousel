@@ -39,7 +39,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
   const size = rows.length * duplicates;
   const [containerRef, containerBounds] = useMeasure();
 
-  const [state, setState] = React.useState(5);
+  const [state, setState] = React.useState(0);
   const [hovered, setHovered] = React.useState(false);
   const [isRight, setIsRight] = React.useState(true);
   const [trottleSwipe, setTrottleSwipe] = React.useState(false);
@@ -207,14 +207,6 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
         }
       }
     }
-    const style = {
-      width: itemWidth,
-      marginRight: spacingPx,
-      transform: `translateX(calc(${
-        100 * slideTr
-      }% + (${spacingPx}px * ${slideTr})))`,
-      transition: !disableTransition ? `translate ${speed / 1000}s` : undefined,
-    };
 
     return {
       className: clsx(carouselClasses.item, {
@@ -223,7 +215,14 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
         [carouselClasses.hidden]: isHidden,
         [carouselClasses.notVisible]: isNotVisible,
       }),
-      style,
+      style: {
+        width: itemWidth,
+        marginRight: spacingPx,
+        transform: `translateX(calc(${
+            100 * slideTr
+        }% + (${spacingPx}px * ${slideTr})))`,
+        transition: !disableTransition ? `all ${speed / 1000}s` : undefined,
+      },
       "data-item": i,
       "data-hidden": isHidden ? 1 : 0,
       children: item,
