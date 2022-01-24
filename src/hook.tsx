@@ -15,6 +15,7 @@ export type CarouselSettings = {
   disableTransition?: boolean;
   centerMode?: boolean;
 
+  defaultValue?: number;
   value?: number;
   onChange?: (slide: number, slideNormal: number) => void;
 };
@@ -32,6 +33,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
     disableTransition = false,
     centerMode: rawCenterMode,
     infinity,
+    defaultValue = 0
   } = props;
   const centerMode = showSlides === 1 ? true : rawCenterMode;
 
@@ -39,7 +41,7 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
   const size = rows.length * duplicates;
   const [containerRef, containerBounds] = useMeasure();
 
-  const [state, setState] = React.useState(0);
+  const [state, setState] = React.useState(defaultValue);
   const [hovered, setHovered] = React.useState(false);
   const [isRight, setIsRight] = React.useState(true);
   const [trottleSwipe, setTrottleSwipe] = React.useState(false);
