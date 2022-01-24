@@ -223,8 +223,8 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
           : undefined,
         padding: spacingPx,
       },
-      "data-item": i,
-      "data-hidden": isHidden ? 1 : 0,
+      "data-item": i.toString(),
+      "data-hidden": (isHidden ? 1 : 0).toString(),
       children: item,
     };
   };
@@ -235,11 +235,11 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
   const listProps = {
     ref: containerRef,
 
-    "data-current": slideNormal,
-    "data-center": centerIndex,
-    "data-from": visibleFrom,
-    "data-to": visibleTo,
-    "data-loop": loop,
+    "data-current": slideNormal.toString(),
+    "data-center": centerIndex.toString(),
+    "data-from": visibleFrom.toString(),
+    "data-to": visibleTo.toString(),
+    "data-loop": loop.toString(),
     className: carouselClasses.list,
     sx: {
       margin: `-${spacingPx}px 0px`,
