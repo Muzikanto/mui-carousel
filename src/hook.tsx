@@ -162,6 +162,9 @@ function useCarousel(rows: React.ReactNode[], props: CarouselSettings) {
       }
     };
   }, []);
+  React.useEffect(() => {
+    setState(defaultValue);
+  }, [defaultValue]);
 
   const onMouseLeave = () => {
     if (hovered) {
