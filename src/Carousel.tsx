@@ -125,7 +125,7 @@ function Carousel({
     });
     next = React.cloneElement(next, {
       ...next.props,
-      onClick: carousel.nextSlide,
+      ...(carousel.hiddenNextArrow ? {} : { onClick: carousel.nextSlide }),
       className: clsx(
         carouselClasses.arrow,
         { [carouselClasses.arrowDisabled]: carousel.hiddenNextArrow },
@@ -140,7 +140,7 @@ function Carousel({
     });
     prev = React.cloneElement(prev, {
       ...prev.props,
-      onClick: carousel.prevSlide,
+      ...(carousel.hiddenPrevArrow ? {} : { onClick: carousel.prevSlide }),
       className: clsx(
         carouselClasses.arrow,
         { [carouselClasses.arrowDisabled]: carousel.hiddenPrevArrow },
@@ -156,10 +156,11 @@ function Carousel({
       const offset =
         props.centerMode && !props.infinity ? Math.floor(showSlides / 2) : 0;
 
+      const isSlideIndexNegative = carousel.slide < 0;
+      const absoluteSlideIndex = Math.abs(carousel.slide) % rows.length;
+
       el = renderDot({
-        selected: props.centerMode
-          ? (i + offset) % rows.length === carousel.centerIndex % rows.length
-          : i === carousel.slide,
+        selected: absoluteSlideIndex !== 0 && isSlideIndexNegative ? rows.length - i === absoluteSlideIndex : i === absoluteSlideIndex,
         index: i + offset,
       });
       el = React.cloneElement(el, {
