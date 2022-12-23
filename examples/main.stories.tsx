@@ -183,6 +183,41 @@ export function NoCenterAutoplay() {
   );
 }
 
+export function NoCenterInfinity() {
+  return (
+    <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
+      <Carousel
+        {...getCommonProps()}
+        sx={{
+          mt: 3,
+          [`& .${carouselClasses.dots}`]: {
+            mt: 5,
+          },
+          [`& .${carouselClasses.item} > *`]: {
+            transition: "all 0.5s",
+          },
+          [`& .${carouselClasses.center} > *`]: {
+            transform: "scale(1.2)",
+          },
+        }}
+        dots={true}
+        spacing={4}
+        autoPlay
+        infinity
+      >
+        {new Array(3).fill(0).map((_, i) => (
+          <Paper
+            key={`item-${i}`}
+            sx={{ height: 200, background: "#fafafa", m: 3 }}
+          >
+            Item: {i}
+          </Paper>
+        ))}
+      </Carousel>
+    </Box>
+  );
+}
+
 export function Infinity() {
   return (
     <Box sx={{ p: 5, width: "100%", boxSizing: "border-box" }}>
